@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Character
+  - Coin
+  - powerup
   layers:
   - Default
   - TransparentFX
@@ -12,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Platform
+  - 
   - 
   - 
   - 
@@ -43,19 +45,19 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: BG1
-    uniqueID: 3101170369
+    uniqueID: 921487863
     locked: 0
   - name: BG2
-    uniqueID: 1712632809
+    uniqueID: 305407305
     locked: 0
   - name: BG3
-    uniqueID: 1481075821
+    uniqueID: 1989641991
     locked: 0
-  - name: Character
-    uniqueID: 3844755167
+  - name: MainCharacter
+    uniqueID: 1246851113
     locked: 0
   - name: Platform
-    uniqueID: 1851526755
+    uniqueID: 1715117067
     locked: 0
   m_RenderingLayers:
   - Default

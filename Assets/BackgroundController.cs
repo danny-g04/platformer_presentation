@@ -25,7 +25,8 @@ public class BackgroundController : MonoBehaviour
         if (movement > startPos + length)
         {
             startPos += length;
-        } else if (movement < startPos - length)
+        }
+        else if (movement < startPos - length)
         {
             startPos -= length;
         }
