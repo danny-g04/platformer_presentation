@@ -2587,6 +2587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Char_Anim
   moveSpeed: 5
   jumpForce: 5
+  dashSpeed: 10
   mult: 2
   dur: 4
   sfxSource: {fileID: 1698344811}
@@ -2595,6 +2596,7 @@ MonoBehaviour:
   coinClip: {fileID: 8300000, guid: da6a0443af51aee48b593e53165cf27f, type: 3}
   enemyKillClip: {fileID: 8300000, guid: 0fe66daa05080e14395b9d6a146341ae, type: 3}
   levelFinishClip: {fileID: 8300000, guid: 376fd03400a202f4cb1a1131e40523a7, type: 3}
+  dashClip: {fileID: 8300000, guid: 71a292dbeb14b524b9faa3834d2e68a6, type: 3}
 --- !u!114 &1698344810
 MonoBehaviour:
   m_ObjectHideFlags: 0
