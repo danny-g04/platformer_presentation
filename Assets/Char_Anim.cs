@@ -7,6 +7,7 @@ public class Char_Anim : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
+    public float dashSpeed = 10f;
 
     public float mult = 2f;
     public float dur = 4f;
@@ -20,6 +21,7 @@ public class Char_Anim : MonoBehaviour
     public AudioClip coinClip;
     public AudioClip enemyKillClip;
     public AudioClip levelFinishClip;
+    public AudioClip dashClip;
 
     Rigidbody2D rb;
     Animator animator;
@@ -39,7 +41,9 @@ public class Char_Anim : MonoBehaviour
     {
         HandleMovement();
         HandleJump();
+        HandleDash();
         HandleAnimation();
+
     }
 
     void HandleMovement()
@@ -57,14 +61,33 @@ public class Char_Anim : MonoBehaviour
             horizontal = 1f;
             facingLeft = false;
             moving = true;
-        } else
+        }
+        else
         {
             moving = false;
         }
 
-            rb.linearVelocity = new Vector2(horizontal * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(horizontal * moveSpeed, rb.linearVelocity.y);
     }
 
+    void HandleDash()
+    {
+        if (Keyboard.current.leftShiftKey.isPressed)
+        {
+            float direction = 1;
+            float originalGravity = rb.gravityScale;
+            if (facingLeft)
+                direction = -1;
+            else
+                direction = 1;
+            rb.gravityScale = 0;
+            rb.linearVelocity = new Vector2(direction * dashSpeed, 0);
+
+            rb.gravityScale = originalGravity;
+        }
+        if (Keyboard.current.leftShiftKey.wasPressedThisFrame)
+            sfxSource.PlayOneShot(dashClip);
+    }
     void HandleJump()
     {
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
@@ -74,15 +97,15 @@ public class Char_Anim : MonoBehaviour
             {
                 sfxSource.PlayOneShot(jumpClip);
             }
-                
+
         }
 
-        
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("powerup"))
+        if (other.gameObject.CompareTag("powerup"))
         {
             StartCoroutine(Pickup(other));
         }
