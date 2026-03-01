@@ -115,10 +115,10 @@ public class Char_Anim : MonoBehaviour
     {
         Destroy(powerup.gameObject);
         moveSpeed *= mult;
-        jumpForce *= 1.5f;
+        jumpForce *= 3f;
         yield return new WaitForSeconds(dur);
         moveSpeed /= mult;
-        jumpForce /= 1.5f;
+        jumpForce /= 3f;
     }
 
     public void PlayCoinSFX()
