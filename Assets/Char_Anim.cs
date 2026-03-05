@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Char_Anim : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Char_Anim : MonoBehaviour
 
     private bool moving = false;
     private bool facingLeft = false;
+    private bool isGrounded;
 
     public AudioSource sfxSource;
     public AudioClip jumpClip;
@@ -43,7 +45,7 @@ public class Char_Anim : MonoBehaviour
         HandleJump();
         HandleDash();
         HandleAnimation();
-
+        Reset();
     }
 
     void HandleMovement()
@@ -88,9 +90,10 @@ public class Char_Anim : MonoBehaviour
         if (Keyboard.current.leftShiftKey.wasPressedThisFrame)
             sfxSource.PlayOneShot(dashClip);
     }
+
     void HandleJump()
     {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             if (jumpClip != null)
@@ -99,27 +102,42 @@ public class Char_Anim : MonoBehaviour
             }
 
         }
-
-
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.gameObject.CompareTag("powerup"))
+        if (collision.gameObject.CompareTag("Platform"))
         {
-            StartCoroutine(Pickup(other));
+            isGrounded = true;
         }
     }
 
-    IEnumerator Pickup(Collider2D powerup)
+     private void OnCollisionExit2D(Collision2D collision)
     {
-        Destroy(powerup.gameObject);
-        moveSpeed *= mult;
-        jumpForce *= 1.5f;
-        yield return new WaitForSeconds(dur);
-        moveSpeed /= mult;
-        jumpForce /= 1.5f;
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            isGrounded = false;
+        }
     }
+
+
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.CompareTag("powerup"))
+            {
+                StartCoroutine(Pickup(other));
+            }
+        }
+
+        IEnumerator Pickup(Collider2D powerup)
+        {
+            Destroy(powerup.gameObject);
+            moveSpeed *= mult;
+            jumpForce *= 1.5f;
+            yield return new WaitForSeconds(dur);
+            moveSpeed /= mult;
+            jumpForce /= 1.5f;
+        }
 
     public void PlayCoinSFX()
     {
@@ -143,6 +161,14 @@ public class Char_Anim : MonoBehaviour
     {
         animator.SetBool("Moving", moving);
         animator.SetBool("FacingLeft", facingLeft);
+    }
+
+    void Reset()
+    {
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene("SampleScene");
+        }
     }
 }
 
