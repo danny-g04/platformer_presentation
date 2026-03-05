@@ -11,6 +11,6 @@ public class Trap : MonoBehaviour
     }
    private void playerDeath()
     {
-        SceneManager.LoadScene("save");
+        SceneManager.LoadScene("SampleScene");
     }
 }
